@@ -7,7 +7,7 @@ module bench;
 	reg sel;
 	wire [3:0] result;
 
-	mux_4_bit U0 (
+	mux_4b U0 (
 		.a (A),
 		.b (B),
 		.sel (sel),
