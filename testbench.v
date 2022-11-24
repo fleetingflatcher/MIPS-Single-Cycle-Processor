@@ -14,8 +14,7 @@ module bench;
 		.out (result) 
 	);
 
-	initial 
-	begin
+	initial begin
 			B = 4'b1111;
 			A = 4'b0000;
 			sel = 1;
