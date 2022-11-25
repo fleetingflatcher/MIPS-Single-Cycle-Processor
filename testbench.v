@@ -2,29 +2,32 @@
 
 module bench;
 
-	reg [3:0] A;
-	reg [3:0] B;
-	reg sel;
-	wire [3:0] result;
+	reg [31:0] operand1;
+	reg [31:0] operand2;
+	reg [2:0] control;
+	wire isZero;
+	wire [31:0] result;
 
-	mux_4b U0 (
-		.a (A),
-		.b (B),
-		.sel (sel),
-		.out (result) 
+	ALU U0 (
+		.operand1 (operand1),
+		.operand2 (operand2),
+		.ALU_control (control),
+		.isZero (isZero),
+		.result (result)
 	);
 
 	initial begin
-			B = 4'b1111;
-			A = 4'b0000;
-			sel = 1;
-		#1 	A = 4'b0001;
-			sel = 0;
-		#1 	A = 4'b0010;
-		#1	sel = 1;
-		 	A = 4'b0100;
-		#1	sel = 0;
-		#1 	A = 4'b1000;
+		operand1 = 32'h0000_1010;
+		operand2 = 32'h0000_1000;
+		control = 3'b010;
+		#1 control = 3'b110;
+		#1 control = 3'b000;
+		#1 control = 3'b001;
+		#1 control = 3'b111;
+		#1 operand2 = 32'h0001_0000;
+		#1 control = 3'b110;
+		operand2 = 32'h0000_1010;
+		#1 ;
 	end
 
 endmodule
