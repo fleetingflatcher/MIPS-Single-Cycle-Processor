@@ -7,7 +7,7 @@ Specifically, the aim of the project is to successfully implement the following 
   load word, 
   store word, 
   branch if equal,
-  branch if not equal
+  branch if not equal,
   add immediate, 
   all J-format instructions, 
   all R-format instructions.
