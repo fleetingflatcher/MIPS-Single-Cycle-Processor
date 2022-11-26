@@ -1,16 +1,17 @@
-module register (CLK, enable, in, out);
+module register (CLK, enabled, addressed, write, read);
 
 input wire CLK;
-input wire enable;
-input wire [31:0] in;
+input wire enabled;
+input wire addressed;
+input wire [31:0] write;
 
-output reg [31:0] out;
+output reg [31:0] read;
 
 always @ (negedge CLK)
 begin
-	if (enable)
-		out <= in;
-	else out <= out;
+	if (enabled&addressed)
+		read <= write;
+	else read <= read;
 end
 
 endmodule
