@@ -1,7 +1,6 @@
-module programCounter (CLK, enable, write, read);
+module programCounter (CLK, write, read);
 
 input wire CLK;
-input wire enable;
 input wire [31:0] write;
 
 output reg [31:0] read;
