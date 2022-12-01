@@ -26,8 +26,7 @@ module testbench;
 		addressed = 1;
 		enable = 0;
 		#5 	enable = 1;
-		#10 enable = 0;
-		
+		#5  enable = 0;
 		#5	write = 32'h0000_0001;
 		#5	enable = 1;
 		#5 	write = 32'h0001_0001;
