@@ -1,10 +1,10 @@
 module programCounter (CLK, write, reset, read);
 
 input wire CLK;
-input wire [31:0] write;
+input wire [4:0] write;
 input reset;
 
-output reg [31:0] read;
+output reg [4:0] read;
 
 always @ (posedge CLK)
 begin
@@ -13,7 +13,7 @@ begin
 end
 always @ (posedge reset)
 begin
-	if (reset) read = 32'h0000_0000;
+	if (reset) read = 0;
 end
 
 endmodule
