@@ -7,15 +7,15 @@ module topLevel;
 	wire				isZero;
 	wire	[31:0]		result;
 
-	
 	wire	[1:0] 		aluInstruct;
 
-	reg 	[31:0]		instruction;
+	wire	[31:0]		currentInstruction;
+	reg 	[4:0]		pretendPC;
 
 	wire	_unnecessaryOutput;
 
 	control U0 (
-		.instructionBits(instruction[31:26]), 
+		.instructionBits(currentInstruction[31:26]), 
 		.writeRegAddressSource(_unnecessaryOutput), 
 		.jumpEnable(_unnecessaryOutput), 
 		.branchEnable(_unnecessaryOutput), 
@@ -29,7 +29,7 @@ module topLevel;
 
 	aluControl U1 (
 		.aluInstruct(aluInstruct),
-		.instructFunc(instruction[5:0]),
+		.instructFunc(currentInstruction[5:0]),
 		.aluOperationCode(aluOperationCode)
 	);
 
@@ -41,5 +41,9 @@ module topLevel;
 		.result(result)
 	);
 
+	instructionMemory U3 (
+		.address(pretendPC), 
+		.currentInstruction(currentInstruction)
+	);
 
 endmodule
