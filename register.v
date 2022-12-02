@@ -15,9 +15,9 @@ begin
 	else read <= read;
 end
 
-always @ (reset)
+always @ (posedge reset)
 begin
-	if (reset) read <= 32'h0000_0000;
+	read <= 32'h0000_0000;
 end
 
 endmodule

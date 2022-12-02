@@ -1,4 +1,5 @@
-module regFile (CLK, writeEnable, reset, readAddress1, readAddress2, writeAddress, writeData, read1, read2);
+module regFile (CLK, writeEnable, reset, readAddress1, readAddress2, 
+					writeAddress, writeData, read1, read2);
 
 	input wire CLK;
 	input wire writeEnable;
