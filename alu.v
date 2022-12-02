@@ -1,14 +1,14 @@
-module ALU (operand1, operand2, ALU_control, isZero, result);
+module ALU (operand1, operand2, aluOperationCode, isZero, result);
 
 	input wire [31:0] operand1;
 	input wire [31:0] operand2;
-	input wire [2:0] ALU_control;
+	input wire [2:0] aluOperationCode;
 	output reg isZero;
 	output reg [31:0] result;
 
-	always @ (operand1 or operand2 or ALU_control)
+	always @ (operand1 or operand2 or aluOperationCode)
 	begin
-	    case (ALU_control)
+	    case (aluOperationCode)
 	    	3'b000: 	//and
 			begin
 	    	    result = operand1 & operand2;
