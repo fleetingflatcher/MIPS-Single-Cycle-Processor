@@ -19,9 +19,10 @@ module topLevel;
 	// RegFile wires
 	wire				writeRegEnable;
 	wire				writeRegAddressSource;
+	wire				writeRegAddress;
 //	wire	[31:0]		regRead1; 	// unneeded
 	wire	[31:0]		regRead2;
-
+	wire	[31:0]		regWrite;
 
 	wire	[31:0]		currentInstruction;
 	reg 	[4:0]		pretendPC;
@@ -77,8 +78,8 @@ module topLevel;
 	mux_5b M2 (
 		.a(currentInstruction[20:16]), 
 		.b(currentInstruction[15:11]), 
-		.sel(), 
-		.out()
+		.sel(writeRegAddressSource), 
+		.out(writeRegAddress)
 	);
 
 	regFile U4 (
@@ -87,8 +88,8 @@ module topLevel;
 		.reset(reset), 
 		.readAddress1(currentInstruction[25:21]), 
 		.readAddress2(currentInstruction[20:16]), 
-		.writeAddress(writeRegAddressSource),
-		.writeData(_unnecessaryOutput), 
+		.writeAddress(writeRegAddress),
+		.writeData(regWrite), 
 		.read1(operand1), 
 		.read2(regRead2)
 	);
