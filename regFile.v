@@ -1,7 +1,8 @@
-module regFile (CLK, writeEnable, readAddress1, readAddress2, writeAddress, writeData, read1, read2);
+module regFile (CLK, writeEnable, reset, readAddress1, readAddress2, writeAddress, writeData, read1, read2);
 
 	input wire CLK;
 	input wire writeEnable;
+	input wire reset;
 	input wire [4:0] readAddress1;
 	input wire [4:0] readAddress2;
 	
@@ -35,6 +36,8 @@ module regFile (CLK, writeEnable, readAddress1, readAddress2, writeAddress, writ
 				.CLK (CLK),
 				// One bit, shared between all regs. Primes all registers
 				.enabled (writeEnable),			// for writing when high.
+				// One bit, shared between all regs. Erases all registers
+				.reset (reset),					// when high.
 				// 5 bits into the regFile, decoded to a single bit into
 				.addressed (decodedAddress[i]),	// a particular register.
 				// Data to be written if register is write-enabled
@@ -55,5 +58,6 @@ module regFile (CLK, writeEnable, readAddress1, readAddress2, writeAddress, writ
 	//		we just refer to index 18 in the outputNetwork vector.
 	assign	read1 = outputNetwork[readAddress1];
 	assign	read2 = outputNetwork[readAddress2];
+	
 
 endmodule
