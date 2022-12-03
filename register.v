@@ -1,6 +1,6 @@
-module register (CLK, enabled, reset, addressed, write, read);
+module register (clock, enabled, reset, addressed, write, read);
 
-input wire CLK;
+input wire clock;
 input wire enabled;
 input wire reset;
 input wire addressed;
@@ -8,7 +8,7 @@ input wire [31:0] write;
 
 output reg [31:0] read;
 
-always @ (negedge CLK)
+always @ (negedge clock)
 begin
 	if (enabled&addressed)
 		read <= write;

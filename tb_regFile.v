@@ -2,7 +2,8 @@
 
 module testbench;
 
-reg CLK;
+reg clock;
+reg reset;
 reg writeEnable;
 reg [31:0] readAddress1;
 reg [31:0] readAddress2;
@@ -13,8 +14,9 @@ wire [31:0] read1;
 wire [31:0] read2;
 
 regFile U0 (
-	.CLK 			(CLK), 
+	.clock 			(clock),
 	.writeEnable 	(writeEnable), 
+	.reset			(reset),
 	.readAddress1 	(readAddress1), 
 	.readAddress2 	(readAddress2), 
 	.writeAddress 	(writeAddress), 
@@ -25,14 +27,17 @@ regFile U0 (
 
 always
 begin
-	#2 CLK = ~CLK;
+	#2 clock = ~clock;
 end
 initial
 begin
-		CLK = 1'b0;
+		clock = 1'b0;
+		reset = 1'b0;
 		writeEnable = 1'b1;
+	#1	reset = 1'b1;
+	#1	reset = 1'b0;
 	#5 	writeAddress = 5'b00000;
-	#5	writeData = 32'h0000_0000;
+	#4	writeData = 32'hFFFF_FFFF;
 	#5	writeAddress = 5'b00001;
 	#5	writeAddress = 5'b00010;
 	#5	writeAddress = 5'b00011;

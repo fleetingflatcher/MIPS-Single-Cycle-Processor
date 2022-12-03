@@ -1,7 +1,7 @@
-module regFile (CLK, writeEnable, reset, readAddress1, readAddress2, 
+module regFile (clock, writeEnable, reset, readAddress1, readAddress2, 
 					writeAddress, writeData, read1, read2);
 
-	input wire CLK;
+	input wire clock;
 	input wire writeEnable;
 	input wire reset;
 	input wire [4:0] readAddress1;
@@ -34,7 +34,7 @@ module regFile (CLK, writeEnable, reset, readAddress1, readAddress2,
 		begin
 			register regs (
 				// Single bit clock input.
-				.CLK (CLK),
+				.clock (clock),
 				// One bit, shared between all regs. Primes all registers
 				.enabled (writeEnable),			// for writing when high.
 				// One bit, shared between all regs. Erases all registers
