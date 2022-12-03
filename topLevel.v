@@ -1,9 +1,9 @@
 `timescale 1us / 1us
-module topLevel;
+module topLevel (clock, reset, enablePC);
 
 	// Universal wires
-	wire				clock;
-	wire				reset;
+	input wire			clock;
+	input wire			reset;
 
 	// ALU wires
 	wire	[31:0]		operand1;
@@ -12,24 +12,32 @@ module topLevel;
 	wire				isZero;
 	wire	[31:0]		result;
 	// ALU Control wires
+	wire				aluSourceImmediate;
 	wire	[1:0]		aluInstruct;
-
+	
 	wire	[31:0]		signExtendedImmediate;
 
 	// RegFile wires
 	wire				writeRegEnable;
 	wire				writeRegAddressSource;
-	wire				writeRegAddress;
-//	wire	[31:0]		regRead1; 	// unneeded
+	wire	[4:0]		writeRegAddress;
+
 	wire	[31:0]		regRead2;
-	wire	[31:0]		regWrite;
+	wire	[31:0]		regWriteData;
 
+	// Instruction Memory & Program Counter
 	wire	[31:0]		currentInstruction;
-	reg 	[4:0]		pretendPC;
-
+	input wire			enablePC;
+	wire 	[4:0]		PC;
 	
-
+	wire	[4:0]		PCplus4;
+	wire	[4:0]		writePC;
+	
+	// temporary use connections
 	wire	_unnecessaryOutput;
+	assign regWriteData = 32'h1234_ABCD;
+	assign writePC = PCplus4;
+
 
 	control U0 (
 		.instructionBits(currentInstruction[31:26]), 
@@ -40,7 +48,7 @@ module topLevel;
 		.writeRegFromMem(_unnecessaryOutput), 
 		.aluInstruct(aluInstruct), 
 		.enableWriteToDataMemory(_unnecessaryOutput), 
-		.aluSourceImmediate(_unnecessaryOutput), 
+		.aluSourceImmediate(aluSourceImmediate), 
 		.writeRegEnable(writeRegEnable)
 	);
 
@@ -71,7 +79,7 @@ module topLevel;
 	);
 
 	instructionMemory U3 (
-		.address(pretendPC), 
+		.address(PC), 
 		.currentInstruction(currentInstruction)
 	);
 	
@@ -83,15 +91,28 @@ module topLevel;
 	);
 
 	regFile U4 (
-		.CLK(clock), 
+		.clock(clock), 
 		.writeEnable(writeRegEnable), 
 		.reset(reset), 
 		.readAddress1(currentInstruction[25:21]), 
 		.readAddress2(currentInstruction[20:16]), 
 		.writeAddress(writeRegAddress),
-		.writeData(regWrite), 
+		.writeData(regWriteData), 
 		.read1(operand1), 
 		.read2(regRead2)
 	);
 
+	programCounter U5 (
+		.clock(clock),
+		.reset(reset),
+		.enable(PCenable),
+		.write(writePC),
+		.read(PC)
+	);
+
+	adder U6 (
+		.operand1(PC),
+		.operand2(5'b00100),
+		.result(PCplus4)
+	);
 endmodule
