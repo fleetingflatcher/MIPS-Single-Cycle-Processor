@@ -1,12 +1,13 @@
-module programCounter (CLK, write, reset, read);
+module programCounter (clock, reset, enable, write, read);
 
-input wire CLK;
+input wire clock;
+input wire enable;
 input wire [4:0] write;
 input reset;
 
 output reg [4:0] read;
 
-always @ (posedge CLK)
+always @ (posedge clock)
 begin
 	if (enable) read <= write;
 	else read <= read;
