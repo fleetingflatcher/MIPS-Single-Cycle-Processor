@@ -8,7 +8,7 @@ input wire [31:0] write;
 
 output reg [31:0] read;
 
-always @ (negedge clock)
+always @ (posedge clock)
 begin
 	if (enabled&addressed)
 		read <= write;

@@ -57,8 +57,12 @@ module regFile (clock, writeEnable, reset, readAddress1, readAddress2,
 	//		The number 1,024 is not an index in any array.
 	//		if instead we want to read from reg 18,
 	//		we just refer to index 18 in the outputNetwork vector.
-	assign	read1 = outputNetwork[readAddress1];
-	assign	read2 = outputNetwork[readAddress2];
+
+	assign read1 = outputNetwork[readAddress1];
+	assign read2 = outputNetwork[readAddress2];
+	
+	//always @ (negedge clock) read1 <= outputNetwork[readAddress1];
+	//always @ (negedge clock) read2 <= outputNetwork[readAddress2];
 	
 
 endmodule
