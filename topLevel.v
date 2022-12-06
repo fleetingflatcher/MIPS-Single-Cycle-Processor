@@ -38,7 +38,6 @@ module topLevel (clock, reset, enablePC);
 	assign regWriteData = 32'h1234_ABCD;
 	assign writePC = PCplus4;
 
-
 	control U0 (
 		.instructionBits(currentInstruction[31:26]), 
 		.writeRegAddressSource(writeRegAddressSource), 
@@ -105,7 +104,7 @@ module topLevel (clock, reset, enablePC);
 	programCounter U5 (
 		.clock(clock),
 		.reset(reset),
-		.enable(PCenable),
+		.enable(enablePC),
 		.write(writePC),
 		.read(PC)
 	);

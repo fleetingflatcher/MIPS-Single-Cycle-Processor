@@ -14,7 +14,7 @@ begin
 end
 always @ (posedge reset)
 begin
-	if (reset) read = 0;
+	read <= 5'b00000;
 end
 
 endmodule
